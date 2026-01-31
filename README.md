@@ -13,7 +13,7 @@ This project demonstrates clean Python code, object-oriented design, and game de
 ### Step 1: Clone/Download Project
 ```bash
 # Clone repository or extract downloaded ZIP
-git clone <repository-url>
+git clone https://github.com/Pats101/platformer-game-kodland.git
 cd zombie-platformer
 
 ### Step 2: Create and Activate Environment to Run Code
