@@ -1,4 +1,3 @@
-# platformer-game-kodland
 # Zombie Platformer Game
 
 ## Project Overview
