@@ -63,4 +63,21 @@ pip install pgzero
 
 ## Final result:
 
-The student creates a complete playable game with a menu, enemies, animations, sound effects, and a clear ending condition.
+The student creates a complete playable game with a menu, enemies, animations, sound effects, and a clear ending condition. Please view the menu, start, win and lose images of the game.
+
+
+<p>
+  <img src="./doc/menu_screen.jpeg" alt="When the game opens" width="550">
+</p>
+
+<p>
+  <img src="./doc/start_screen.jpeg" alt="When the player starts the game" width="550">
+</p>
+
+<p>
+  <img src="./doc/win_screen.jpeg" alt="When the player wins the game" width="550">
+</p>
+
+<p>
+  <img src="./doc/lose_screen.jpeg" alt="When the player loses the game" width="550">
+</p>
