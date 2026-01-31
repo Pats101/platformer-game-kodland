@@ -29,3 +29,38 @@ source venv/bin/activate
 ### Step 3: Install Pgzero
 # Install required libraries
 pip install pgzero
+```
+
+# Course Card – Python LVL1
+
+Project Name: Zombie Escape
+
+Game Type: Platformer (Pygame Zero)
+
+Student Age: 8+
+
+Difficulty: Beginner – Intermediate
+
+## Students learn how to:
+
+- use variables to store positions, speed, and game state
+- use if, elif, and else to control game logic
+- use while / game loop logic for continuous gameplay
+- work with lists to manage enemies
+- detect collisions with colliderect
+- create simple animations using sprite sequences
+- organize code with functions and classes
+- add sounds and background music
+- understand win and lose conditions in games
+
+## Students will be able to:
+
+- perform logical thinking
+- problem-solve
+- debug code
+- understand basic game design
+- read and explain code
+
+## Final result:
+
+The student creates a complete playable game with a menu, enemies, animations, sound effects, and a clear ending condition.
