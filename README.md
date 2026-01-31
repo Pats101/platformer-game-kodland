@@ -45,12 +45,12 @@ Difficulty: Beginner – Intermediate
 ## Students learn how to:
 
 - use variables to store positions, speed, and game state
-- use if, elif, and else to control game logic
-- use while / game loop logic for continuous gameplay
-- work with lists to manage enemies
+- use **if**, **elif**, and **else** to control game logic
+- use **while** / game loop logic for continuous gameplay
+- work with **lists** to manage enemies
 - detect collisions with colliderect
 - create simple animations using sprite sequences
-- organize code with functions and classes
+- organize code with **functions** and **classes**
 - add sounds and background music
 - understand win and lose conditions in games
 
