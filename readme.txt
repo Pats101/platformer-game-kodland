@@ -33,13 +33,12 @@ pip install pgzero
 
 # Course Card – Python LVL1
 
-Project Name: Zombie Escape
-
-Game Type: Platformer (Pygame Zero)
-
-Student Age: 8+
-
-Difficulty: Beginner – Intermediate
+| Infor on | Details |
+|-------|---------|
+| **Project Name** | Zombie Escape |
+| **Game Type** | 2D Platformer (Pygame Zero) |
+| **Student Age** | 8+ years |
+| **Difficulty** | Beginner – Intermediate |
 
 ## Students learn how to:
 
