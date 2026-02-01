@@ -9,14 +9,14 @@ This project demonstrates clean Python code, object-oriented design, and game de
 
 ## Installation Guide
 
-### Step 1: Clone/Download Project
 ```bash
-# Clone repository or extract downloaded ZIP
+### Step 1: Clone/Download Project
+# Clone repository or extract downloaded ZIP using the terminal
 git clone https://github.com/Pats101/platformer-game-kodland.git
-cd zombie-platformer
+cd platformer_game
 
 ### Step 2: Create and Activate Environment to Run Code
-# Create virtual environment
+# Create virtual environment in root directory
 python -m venv venv
 
 # Activate virtual environment
@@ -29,6 +29,10 @@ source venv/bin/activate
 ### Step 3: Install Pgzero
 # Install required libraries
 pip install pgzero
+
+### Step 34: Run the code
+# To open the game run:
+python main.py
 
 ```
 
