@@ -38,6 +38,10 @@ def stop_music():
     except Exception:
         pass
 
+def stop_all_audio():
+    stop_sound("running_forest")
+    stop_music()
+
 
 # This is the PLAYER class
 class Player(Actor):
@@ -98,7 +102,7 @@ class Player(Actor):
 
     # Am I in the air right now?
     def is_jumping(self):
-        return self.velocity_y < -1 or self.y < GROUND - 35
+        return self.velocity_y != 0
 
     # JUMP! But only if I am on the ground or on a platform
     def jump(self):
@@ -106,66 +110,49 @@ class Player(Actor):
             self.velocity_y = self.jump_power
             play_sound("jump")
 
-# This is a ZOMBIE - the bad guy! He walks back and forth
-class Zombie(Actor):
-    def __init__(self, x, y, patrol_width=100):
-        super().__init__("zombie_idle", (x, y))
-        # The zombie walks between these two spots (like a guard)
-        self.patrol_left, self.patrol_right = x - patrol_width // 2, x + patrol_width // 2
-        # How fast the zombie walks
-        self.speed = 1.5
-        # Which way the zombie is going (1 = right, -1 = left)
+class Enemy(Actor):
+    def __init__(self, idle_img, walk1, walk2, x, y, patrol_width, speed):
+        super().__init__(idle_img, (x, y))
+
+        # Save start position
+        self.start_x = x
+
+        # Patrol limits (relative to start position)
+        self.patrol_left = x - patrol_width // 2
+        self.patrol_right = x + patrol_width // 2
+
+        self.speed = speed
         self.direction = 1
-        # Which walk picture to show
+
+        self.walk_images = (walk1, walk2)
         self.walk_frame = 0
 
     def update(self):
-        # Move the zombie left or right
+        # Move enemy
         self.x += self.speed * self.direction
 
-        # If the zombie reaches the edge, turn around!
+        # Clamp patrol movement
         if self.x <= self.patrol_left:
-            self.x, self.direction = self.patrol_left, 1
+            self.x = self.patrol_left
+            self.direction = 1
         elif self.x >= self.patrol_right:
-            self.x, self.direction = self.patrol_right, -1
+            self.x = self.patrol_right
+            self.direction = -1
 
-        # Swap pictures to make it look like the zombie is walking
+        # Animate walking
         self.walk_frame += 1
         if self.walk_frame % 10 == 0:
-            self.image = "zombie_walk1" if self.image == "zombie_walk2" else "zombie_walk2"
-
-# This is an ALIEN - another bad guy! He also patrols back and forth
-class Alien(Actor):
-    def __init__(self, x, y, patrol_width=100):
-        super().__init__("aliengreen_stand", (x, y))
-        # The alien walks between these two spots
-        self.patrol_left, self.patrol_right = x - patrol_width // 2, x + patrol_width // 2
-        # How fast the alien walks
-        self.speed = 1.2
-        # Which way the alien is going (1 = right, -1 = left)
-        self.direction = 1
-        # Which walk picture to show
-        self.walk_frame = 0
-
-    def update(self):
-        # Move the alien left or right
-        self.x += self.speed * self.direction
-
-        # If the alien reaches the edge, turn around!
-        if self.x <= self.patrol_left:
-            self.x, self.direction = self.patrol_left, 1
-        elif self.x >= self.patrol_right:
-            self.x, self.direction = self.patrol_right, -1
-
-        # Swap pictures to make it look like the alien is walking
-        self.walk_frame += 1
-        if self.walk_frame % 10 == 0:
-            self.image = "aliengreen_walk1" if self.image == "aliengreen_walk2" else "aliengreen_walk2"
+            self.image = (
+                self.walk_images[0]
+                if self.image == self.walk_images[1]
+                else self.walk_images[1]
+            )
 
 # CREATE all the things in my game world
 player = Player()
-zombies = [Zombie(280, 395, 60)]
-alien = Alien(480, 322, 40)
+zombies = [Enemy("zombie_idle", "zombie_walk1", "zombie_walk2", 280, 395, patrol_width=60, speed=1.5)]
+alien = Enemy("aliengreen_stand","aliengreen_walk1", "aliengreen_walk2", 480, 322, patrol_width=40, speed=1.2)
+
 # All enemies in one list so I can check them all
 enemies = [zombies[0], alien]
 coins = [Actor("coin", (150, 420)), Actor("coin", (400, 340)), Actor("coin", (650, 260))]
@@ -179,8 +166,7 @@ def update():
 
     # Only do stuff if I am actually playing
     if game_state != "playing":
-        stop_sound("running_forest")
-        stop_music()
+        stop_all_audio()
         return
 
     player.update(platforms)
@@ -195,8 +181,7 @@ def update():
         # Game over when I get touched by an enemy
         if player.colliderect(enemy):
             game_state = "lose"
-            stop_sound("running_forest")
-            stop_music()
+            stop_all_audio()
             play_sound("lose")
             return
 
@@ -210,8 +195,7 @@ def update():
     # Got all 3 coins? I WIN!
     if score >= 3:
         game_state = "win"
-        stop_sound("running_forest")
-        stop_music()
+        stop_all_audio()
         play_sound("win")
 
 # This DRAWS everything on the screen (like painting a picture)
@@ -276,6 +260,20 @@ def on_mouse_down(pos):
         elif 280 <= pos[1] <= 330: sound_on = not sound_on    # Clicked SOUND
         elif 360 <= pos[1] <= 410: exit()                     # Clicked EXIT
 
+def reset_game():
+    global score, coins
+    score = 0
+    player.x, player.y, player.velocity_y = 100, 420, 0
+    player.image = "player_idle"
+    enemies[0].x, enemies[0].y = 280, 395
+    enemies[1].x, enemies[1].y = 480, 322
+    coins[:] = [
+        Actor("coin", (150, 420)),
+        Actor("coin", (400, 340)),
+        Actor("coin", (650, 260)),
+    ]
+
+
 # When I press a KEY on the keyboard
 def on_key_down(key):
     global game_state, score
@@ -285,20 +283,12 @@ def on_key_down(key):
     # Press R to play again after winning or losing
     if key == keys.R and game_state in ("win", "lose"):
         game_state = "playing"
-        score = 0
-        player.x = 100
-        player.y = 420
-        player.image = "player_idle"
-        player.velocity_y = 0
-        zombies[0].x, zombies[0].y = 280, 395
-        alien.x, alien.y = 480, 322
-        coins[:] = [Actor("coin", (150, 420)), Actor("coin", (400, 340)), Actor("coin", (650, 260))]
+        reset_game()
         play_music()
     # Press ESCAPE to go back to the menu
     if key == keys.ESCAPE:
         game_state = "menu"
-        stop_sound("running_forest")
-        stop_music()
+        stop_all_audio()
 
 # START THE GAME!
 pgzrun.go()
