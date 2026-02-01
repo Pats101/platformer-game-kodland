@@ -9,13 +9,15 @@ This project demonstrates clean Python code, object-oriented design, and game de
 
 ## Installation Guide
 
-```bash
 ### Step 1: Clone/Download Project
+```bash
 # Clone repository or extract downloaded ZIP using the terminal
 git clone https://github.com/Pats101/platformer-game-kodland.git
 cd platformer_game
 
+```
 ### Step 2: Create and Activate Environment to Run Code
+```bash
 # Create virtual environment in root directory
 python -m venv venv
 
@@ -26,11 +28,15 @@ venv\Scripts\activate
 # For macOS/Linux:
 source venv/bin/activate
 
+```
 ### Step 3: Install Pgzero
+```bash
 # Install required libraries
 pip install pgzero
 
-### Step 34: Run the code
+```
+### Step 4: Run the code
+```bash
 # To open the game run:
 python main.py
 
