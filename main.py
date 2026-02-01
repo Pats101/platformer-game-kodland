@@ -192,8 +192,6 @@ def update():
     # Check each enemy (zombies and aliens!)
     for enemy in enemies:
         enemy.update()
-        # If the enemy is far away, don't bother checking
-        if abs(player.x - enemy.x) > 100: continue
         # Game over when I get touched by an enemy
         if player.colliderect(enemy):
             game_state = "lose"
